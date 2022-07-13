@@ -3,10 +3,10 @@ package modelo;
 public class Piso extends Inmueble {
 
 	// definicion de atributos propios del piso
-	protected int numHabitaciones;
-	protected boolean vpo;
-	protected boolean atico;
-	protected int antiguedad;
+	private int numHabitaciones;
+	private boolean vpo;
+	private boolean atico;
+	private int antiguedad;
 
 	// Constructor sin parámetros, que establece el numero de habitaciones a 0 y vpo
 	// a false
@@ -26,19 +26,29 @@ public class Piso extends Inmueble {
 		this.atico = atico;
 		this.antiguedad = antiguedad;
 	}
+	
+	public Piso(Piso i) {
+		super(i);
+		this.numHabitaciones = i.numHabitaciones;
+		this.vpo = i.vpo;
+		this.atico = i.atico;
+		this.antiguedad = i.antiguedad;
+	}
 
 	// Redefine el método toString para mostrar los detalles del Piso/inmueble
 	@Override
 	public String toString() {
-		return "Piso [numHabitaciones=" + numHabitaciones + ", vpo=" + vpo + ", atico=" + atico + ", antiguedad="
-				+ antiguedad + ", num_ref=" + num_ref + ", superficie_m2=" + superficie_m2 + ", valorInmueble="
-				+ valorInmueble + ", descripcion=" + descripcion + ", precio_m2=" + precio_m2 + "]";
+		return "Piso [num_ref=" + num_ref + ", superficie_m2=" + superficie_m2 + ", valorInmueble=" + valorInmueble
+				+ ", descripcion=" + descripcion + ", precio_m2=" + precio_m2 + ", numHabitaciones=" + numHabitaciones
+				+ ", vpo=" + vpo + ", atico=" + atico + ", antiguedad=" + antiguedad + "]";
 	}
-
+	
 	// Getter y setters
 	public int getNumHabitaciones() {
 		return numHabitaciones;
 	}
+
+	
 
 	public void setNumHabitaciones(int numHabitaciones) {
 		this.numHabitaciones = numHabitaciones;
@@ -86,8 +96,11 @@ public class Piso extends Inmueble {
 	// más de 25 años de antigüedad, de lo contrario devuelve 0 euros
 	@Override
 	public double calculaPrecioVenta() {
-		// TODO Esbozo de método generado automáticamente
-		return 0;
+		double precio=super.getPrecio_m2()*super.superficie_m2;
+		if (atico) 
+			precio=precio*1.06;			
+		if (vpo && this.antiguedad<=25) 
+			precio=0;
+		return precio;
 	}
-
 }

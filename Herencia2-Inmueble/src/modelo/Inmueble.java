@@ -2,15 +2,15 @@ package modelo;
 
 import java.util.Objects;
 
-abstract class Inmueble {
+public abstract class Inmueble implements Comparable<Inmueble>{
 	// declaracion de atributos
 	protected String num_ref;
 	protected double superficie_m2;
 	protected double valorInmueble;
 	protected String descripcion;
 	protected double precio_m2;
-	public static final double coef_urb = 0.85;
-	public static final double coef_rus = 0.45;
+	public static final double coef_urb = 0.0085;
+	public static final double coef_rus = 0.0045;
 
 	// Constructor vacio
 	public Inmueble() {
@@ -89,7 +89,7 @@ abstract class Inmueble {
 	// Metodo toString
 	@Override
 	public String toString() {
-		return "Inmueble [num_ref=" + num_ref + ", superficie_m2=" + superficie_m2 + ", valorInmueble=" + valorInmueble
+		return "\nInmueble [num_ref=" + num_ref + ", superficie_m2=" + superficie_m2 + ", valorInmueble=" + valorInmueble
 				+ ", descripcion=" + descripcion + ", precio_m2=" + precio_m2 + "]";
 	}
 
@@ -111,8 +111,21 @@ abstract class Inmueble {
 		Inmueble other = (Inmueble) obj;
 		return Objects.equals(num_ref, other.num_ref);
 	}
-	
+
+	//Implementa la interfaz comparable e implementa el método compareTo que comparará el inmueble por su superficie
+	@Override
+	public int compareTo(Inmueble o) {
+		if(this.superficie_m2<o.superficie_m2) 
+			return -1;
+		else if(this.superficie_m2<o.superficie_m2)
+			return 0;
+		else
+			return 1;
+	//o tambien: return Double.compare(this.superficie_m2,o.superficie_m2);
+	}
+
 	public abstract double calculaIBI();
+
 	public abstract double calculaPrecioVenta();
 
 }
